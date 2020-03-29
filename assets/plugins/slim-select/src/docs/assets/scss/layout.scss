@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,700');
+
+html {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  background: radial-gradient(circle at 47% 9%, #7db9e8, #5897fb);
+  background-attachment: fixed;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  font-family: 'Montserrat', sans-serif, Helvetica;
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+  color: $font-color;
+
+  #app {
+    display: flex;
+    flex-direction: column;
+    min-width: $min-width;
+    width: 100%;
+    max-width: $max-width;
+
+    > .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex: 0 1 auto;
+      color: #ffffff;
+      margin: 0;
+      padding: 15px 0 15px 0;
+
+      @media screen and (max-width: $max-width) {
+        padding: $spacing-half;
+      }
+      @media screen and (max-width: 600px) {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .text {
+        flex: 1 1 100%;
+        .logo {
+          font-size: 40px;
+          font-weight: 300;
+        }
+
+        .tagline {
+          font-size: 18px;
+        }
+      }
+
+      .select-nav {
+        display: flex;
+        flex: 0 1 100%;
+        width: 100%;
+        color: #666666;
+        margin: 0 auto;
+        padding: 8px 0 0 0;
+
+        a, img {
+          height: 30px;
+        }
+
+        > * {
+          flex: 0 1 auto;
+          margin: 0 0 0 8px;
+
+          @media screen and (max-width: $max-width) {
+            &:first-child {
+              margin: 0 0 0 0;
+            }
+          }
+        }
+      }
+    }
+
+    .main {
+      flex: 0 1 auto;
+      display: flex;
+      flex-direction: column;
+
+      .content {
+        flex: 1 1 auto;
+        padding: 20px;
+        margin: 0 0 20px 0;
+        background-color: #ffffff;
+        box-shadow: 0px 5px 10px 5px rgba(0, 0, 0, 0.2);
+        border-radius: 4px;
+
+        @media screen and (max-width: $max-width) {
+          box-shadow: none;
+          border-radius: 0px;
+        }
+
+        > :last-child {
+          margin-bottom: 0px;
+        }
+      }
+    }
+
+    .footer {
+      color: #ffffff;
+      font-size: 13px;
+      padding: 0 0 12px 0;
+      text-align: center;
+
+      @media screen and (max-width: $max-width) {
+        padding: $spacing-half;
+      }
+
+      a {
+        color: #666666;
+      }
+    }
+  }
+}
