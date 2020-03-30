@@ -31,6 +31,9 @@ class Admin extends CI_Controller {
         $overview['orders'] = $this->order->latest_orders();
         $overview['customers'] = $this->customer->latest_customers();
 
+        $overview['order_overviews'] = $this->order->order_overview();
+        $overview['income_overviews'] = $this->order->income_overview();
+
         $this->load->view('header', $params);
         $this->load->view('overview', $overview);
         $this->load->view('footer');

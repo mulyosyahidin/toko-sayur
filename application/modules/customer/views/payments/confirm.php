@@ -89,7 +89,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <?php if ( count($banks) > 0) : ?>
                             <select name="bank" class="form-control" id="orders">
                                 <?php foreach ($banks as $bank => $data) : ?>
-                                    <option value="<?php echo $bank; ?>" <?php echo set_select('bank', $bank); ?>)><?php echo $data->bank; ?> a.n <?php echo $data->name; ?> (<?php echo $data->number; ?>)</option>
+                                    <option value="<?php echo $bank; ?>"<?php echo set_select('bank', $bank); ?>><?php echo $data->bank; ?> a.n <?php echo $data->name; ?> (<?php echo $data->number; ?>)</option>
                                 <?php endforeach; ?>
                             </select>
                             <?php else : ?>

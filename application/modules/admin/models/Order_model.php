@@ -101,4 +101,25 @@ class Order_model extends CI_Model {
     {
         return $this->db->where('user_id', $id)->order_by('order_date', 'DESC')->get('orders')->result();
     }
+
+    public function order_overview()
+    {
+        $overview = $this->db->query("
+            SELECT MONTH(order_date) month, COUNT(order_date) sale 
+            FROM orders
+            WHERE order_date >= NOW() - INTERVAL 1 YEAR
+            GROUP BY MONTH(order_date)");
+
+        return $overview->result();
+    }
+
+    public function income_overview()
+    {
+        $data = $this->db->query("
+            SELECT  MONTH(order_date) AS month, SUM(total_price) AS income
+            FROM orders
+            GROUP BY MONTH(order_date)");
+
+        return $data->result();
+    }
 }
