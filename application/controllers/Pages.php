@@ -7,13 +7,18 @@ class Pages extends CI_Controller {
         parent::__construct();
 
         $this->load->library('form_validation');
-        $this->load->model('contact_model', 'contact');
+        $this->load->model(array(
+            'contact_model' => 'contact',
+            'review_model' => 'review'
+        ));
     }
 
     public function about()
     {
+        $params['reviews'] = $this->review->get_all_reviews();
+
         get_header(get_store_name());
-        get_template_part('pages/about');
+        get_template_part('pages/about', $params);
         get_footer();
     }
 

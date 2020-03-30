@@ -91,6 +91,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" href="<?php echo site_url('admin/reviews'); ?>">
+                <i class="fa fa-edit text-info"></i>
+                <span class="nav-link-text">Review Pelanggan</span>
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="<?php echo site_url('admin/contacts'); ?>">
                 <i class="fa fa-phone text-info"></i>
                 <span class="nav-link-text">Kontak</span>

@@ -103,4 +103,9 @@ class Order_model extends CI_Model {
 
         $this->db->where('id', $id)->delete('orders');
     }
+
+    public function all_orders()
+    {
+        return $this->db->where('user_id', $this->user_id)->order_by('order_date', 'DESC')->get('orders')->result();
+    }
 }
