@@ -65,7 +65,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
           <img src="<?php echo get_user_image(); ?>" class="img-circle elevation-2" alt="Foto profil <?php echo get_user_name(); ?>">
         </div>
         <div class="info">
-          <a href="<?php echo site_url('profile'); ?>" class="d-block"><?php echo get_user_name(); ?></a>
+          <a href="<?php echo site_url('customer/profile'); ?>" class="d-block"><?php echo get_user_name(); ?></a>
         </div>
       </div>
 

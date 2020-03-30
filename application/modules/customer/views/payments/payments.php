@@ -5,10 +5,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
+                <div class="col-sm-5">
                     <h1>Pembayaran Saya</h1>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-2">
+                    <?php echo anchor('customer/payments/confirm', 'Tambah Pembayaran'); ?>
+                </div>
+                <div class="col-sm-5">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><?php echo anchor(base_url(), 'Home'); ?></li>
                         <li class="breadcrumb-item active">Pembayaran</li>
