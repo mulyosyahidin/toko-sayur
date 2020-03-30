@@ -41,7 +41,18 @@ if ( ! function_exists('get_admin_image'))
 {
     function get_admin_image()
     {
-        return base_url('assets/uploads/users/admin.png');
+        $id = get_current_user_id();
+        $CI = init();
+
+        $data = $CI->db->select('profile_picture')->where('id', $id)->get('users')->row();
+        $profile_picture = $data->profile_picture;
+
+        if ( file_exists('assets/uploads/users/'. $profile_picture))
+            $file = $profile_picture;
+        else
+            $file = 'admin.png';
+
+        return base_url('assets/uploads/users/'. $file);
     }
 }
 
