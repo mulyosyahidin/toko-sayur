@@ -76,7 +76,7 @@ class Settings extends CI_Controller {
             $password = $this->input->post('password');
 
             if ($password)
-                $password = password_hash($p, PASSWORD_BCRYPT);
+                $password = password_hash($password, PASSWORD_BCRYPT);
 
             $config['upload_path'] = './assets/uploads/users/';
             $config['allowed_types'] = 'jpg|png|jpeg';
