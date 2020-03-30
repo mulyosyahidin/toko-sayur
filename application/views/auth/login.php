@@ -55,7 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
 
         <footer>
-            <p class="copyright-agileinfo"> &copy; 2018 Material Login Form. All Rights Reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
+            <p class="copyright-agileinfo"> &copy; 2018 <?php echo anchor(base_url(), get_store_name()); ?></p>
         </footer>
 
     </body>

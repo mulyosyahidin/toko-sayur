@@ -53,13 +53,26 @@ class Shop extends CI_Controller {
     
     public function checkout($action = '')
     {
-        verify_session('customer');
+        if ( ! is_login()) {
+            $coupon = $this->input->post('coupon_code');
+            $quantity = $this->input->post('quantity');
 
+            $this->session->set_userdata('_temp_coupon', $coupon);
+            $this->session->set_userdata('_temp_quantity', $quantity);
+
+            verify_session('customer');
+        }
         switch ($action)
         {
             default :
-                $coupon = $this->input->post('coupon_code');
-                $quantity = $this->input->post('quantity');
+                $coupon = $this->input->post('coupon_code') ? $this->input->post('coupon_code') : $this->session->userdata('_temp_coupon');
+                $quantity = $this->input->post('quantity') ? $this->input->post('quantity') : $this->session->userdata('_temp_quantity');
+
+                if ($this->session->userdata('_temp_quantity') || $this->session->userdata('_temp_coupon'))
+                {
+                    $this->session->unset_userdata('_temp_coupon');
+                    $this->session->unset_userdata('_temp_quantity');
+                }
 
                 $items = [];
 
