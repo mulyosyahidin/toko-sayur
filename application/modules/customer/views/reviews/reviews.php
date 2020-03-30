@@ -8,7 +8,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="col-sm-6">
                     <h1>Review Saya</h1>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-1"> 
+                    <?php echo anchor('customer/reviews/write', 'Tulis Review Baru'); ?>
+                </div>
+                <div class="col-sm-5">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><?php echo anchor(base_url(), 'Home'); ?></li>
                         <li class="breadcrumb-item active">Review</li>

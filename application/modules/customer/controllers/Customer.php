@@ -10,7 +10,8 @@ class Customer extends CI_Controller {
 
         $this->load->model(array(
             'payment_model' => 'payment',
-            'order_model' => 'order'
+            'order_model' => 'order',
+            'review_model' => 'review'
         ));
     }
 
@@ -21,6 +22,7 @@ class Customer extends CI_Controller {
         $home['total_order'] = $this->order->count_all_orders();
         $home['total_payment'] = $this->payment->count_all_payments();
         $home['total_process_order'] = $this->order->count_process_order();
+        $home['total_review'] = $this->review->count_all_reviews();
 
         $home['flash'] = $this->session->flashdata('store_flash');
 

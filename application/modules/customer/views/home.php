@@ -74,7 +74,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>5</h3>
+                <h3><?php echo $total_review; ?></h3>
 
                 <p>Review</p>
               </div>
