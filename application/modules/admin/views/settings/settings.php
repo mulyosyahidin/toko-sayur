@@ -85,10 +85,69 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </div>
               
             </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h3 class="mb-0">Pengaturan Pembayaran</h3>
+                <button type="button" class="btn btn-outline-primary btn-add float-right btn-sm" style="margin-top: -30px;"><i class="fas fa-plus-square"></i></button>
+              </div>
+              <div class="card-body">
+              <?php if ( is_array($banks) && count($banks) > 0) : ?>
+                <?php $n = 0; ?>
+                <div class="increment">
+              <?php foreach ($banks as $bank) : ?>
+                
+                <div class="row alert alert-info">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="">Nama bank:</label>
+                      <input type="text" class="form-control" name="banks[<?php echo $n; ?>][bank]" value="<?php echo $bank->bank; ?>">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label for="">No. Rekening:</label>
+                    <input type="text" class="form-control" name="banks[<?php echo $n; ?>][number]" value="<?php echo $bank->number; ?>">
+                  </div>
+                  <div class="col-6">
+                    <label for="">Nama pemilik:</label>
+                    <input type="text" class="form-control" name="banks[<?php echo $n; ?>][name]" value="<?php echo $bank->name; ?>">
+                  </div>
+                </div>
+              
+              <?php $n++; ?>
+              <?php endforeach; ?>
+              </div>
+              <?php else : ?>
+              <div class="alert alert-info alert-zero">Belum ada data bank yang ditambahkan. Tambahkan yang pertama!</div>
+              <div class="increment">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="">Nama bank:</label>
+                      <input type="text" class="form-control" name="banks[0][bank]">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label for="">No. Rekening:</label>
+                    <input type="text" class="form-control" name="banks[0][number]">
+                  </div>
+                  <div class="col-6">
+                    <label for="">Nama pemilik:</label>
+                    <input type="text" class="form-control" name="banks[0][name]">
+                  </div>
+                </div>
+              </div>
+
+              <?php endif; ?>
+              </div>
+              <div class="card-footer">
+                
+              </div>
+            </div>
             
           </div>
-
         </div>
+
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header">
@@ -142,3 +201,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </div>
 
     </form>
+
+    <script>
+      jQuery(document).ready(function () {
+            let no = 0;
+            jQuery(".btn-add").click(function () {
+                no = no + 1;
+                let markup = `<div class="row alert alert-success m-1">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="">Nama bank:</label>
+                      <input type="text" class="form-control" name="banks[${no}][bank]">
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <label for="">No. Rekening:</label>
+                    <input type="text" class="form-control" name="banks[${no}][number]">
+                  </div>
+                  <div class="col-6">
+                    <label for="">Nama pemilik:</label>
+                    <input type="text" class="form-control" name="banks[${no}][name]">
+                  </div>
+                </div>`
+                jQuery(".increment").append(markup);
+
+                let zero = $('.alert-zero');
+                if (zero.length > 0) {
+                  zero.hide('fade');
+                }
+            });
+            jQuery("body").on("click", ".btn-remove", function () {
+                jQuery(this).parents(".input-group").remove();
+
+                let zero = $('.alert-zero');
+                if (zero.length > 0) {
+                  zero.show('fade')
+                }
+            })
+        })
+    </script>

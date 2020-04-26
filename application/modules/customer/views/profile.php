@@ -53,7 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                   <li class="nav-item"><a class="nav-link profil active" href="#profile" data-toggle="tab">Profil</a></li>
                   <li class="nav-item"><a class="nav-link akun " href="#akun" data-toggle="tab">Akun</a></li>
                   <li class="nav-item"><a class="nav-link email" href="#email" data-toggle="tab">Email</a></li>
-                  <li class="nav-item"><a class="nav-link logout btn btn-danger btn-sm text-white font-weight-bold" href="#" data-toggle="tab">Log Out</a></li>
+                  <li class="nav-item"><a class="nav-link logout btn btn-danger btn-sm text-white font-weight-bold" href="<?php echo site_url('auth/logout'); ?>">Log Out</a></li>
                 </ul>
               </div><!-- /.card-header -->
               <div class="card-body">

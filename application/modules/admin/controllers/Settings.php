@@ -17,6 +17,7 @@ class Settings extends CI_Controller {
         $params['title'] = 'Pengaturan';
 
         $settings['flash'] = $this->session->flashdata('settings_flash');
+        $settings['banks'] = (Array) json_decode(get_settings('payment_banks'));
 
         $this->load->view('header', $params);
         $this->load->view('settings/settings', $settings);
@@ -35,6 +36,24 @@ class Settings extends CI_Controller {
             $data = $this->input->post($field);
 
             update_settings($field, $data);
+        }
+
+        $banks = $this->input->post('banks');
+
+        if (is_array($banks) && count($banks) > 0 && ! empty($banks[0]['bank']))
+        {
+            $data = [];
+            foreach ($banks as $bank)
+            {
+                $bank_name = $bank['bank'];
+                $bank_name = $this->_bank_slug($bank_name);
+
+                $data[$bank_name] = $bank;
+                
+            }
+
+            $data = json_encode($data);
+            update_settings('payment_banks', $data);
         }
 
         $this->session->set_flashdata('settings_flash', 'Pengaturan berhasil diperbarui');
@@ -115,5 +134,13 @@ class Settings extends CI_Controller {
             $this->session->set_flashdata('settings_flash', 'Profil berhasil diperbarui');
             redirect('admin/settings/profile');
         }
+    }
+
+    protected function _bank_slug($bank)
+    {
+        $bank = strtolower($bank);
+        $bank = str_replace(' ', '-', $bank);
+
+        return $bank;
     }
 }
