@@ -19,7 +19,7 @@ dan lain-lain.
 User demo:
 - Admin
 username: mulyojr
-password: 12345
+password: qwerty
 - Customer:
 username: agungtr
-password: 12345
+password: qwerty
