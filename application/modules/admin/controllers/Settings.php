@@ -88,13 +88,16 @@ class Settings extends CI_Controller {
         {
             $data = $this->setting->get_profile();
             $current_profile_picture = $data->profile_picture;
+            $current_password = $data->password;
 
             $name = $this->input->post('name');
             $email = $this->input->post('email');
             $username = $this->input->post('username');
             $password = $this->input->post('password');
 
-            if ($password)
+            if ( empty($password))
+                $password = $current_password;
+            else
                 $password = password_hash($password, PASSWORD_BCRYPT);
 
             $config['upload_path'] = './assets/uploads/users/';

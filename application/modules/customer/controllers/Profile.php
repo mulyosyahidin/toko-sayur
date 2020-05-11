@@ -93,9 +93,19 @@ class Profile extends CI_Controller {
         else
         {
             $data = new stdClass();
+            $profile = $this->profile->get_profile();
+
+            $get_password = $this->input->post('password');
+
+            if ( empty($get_password)) {
+                $password = $profile->password;
+            }
+            else {
+                $password = password_hash($get_password, PASSWORD_BCRYPT);
+            }
 
             $data->username = $this->input->post('username');
-            $data->password = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
+            $data->password = $password;
 
             $flash_message = ($this->profile->update_account($data)) ? 'Akun berhasil diperbarui' : 'Terjadi kesalahan';
             

@@ -16,7 +16,7 @@ class Profile_model extends CI_Model {
         $id = $this->user_id;
 
         $data = $this->db->query("
-            SELECT u.id, u.username, u.email, c.name, c.phone_number, c.address, c.profile_picture
+            SELECT u.id, u.username, u.email, c.name, c.phone_number, c.address, c.profile_picture, u.password
             FROM users u
             JOIN customers c
                 ON c.user_id = u.id
