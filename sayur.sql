@@ -38,12 +38,7 @@ CREATE TABLE `ci_sessions` (
 --
 -- Dumping data untuk tabel `ci_sessions`
 --
-<<<<<<< HEAD
 
-------------------------------------------------------
-=======
--- --------------------------------------------------------
->>>>>>> 90a66f66935fdf6e1cec3ad032a054c2a245bbb4
 
 --
 -- Struktur dari tabel `contacts`
