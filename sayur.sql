@@ -38,8 +38,12 @@ CREATE TABLE `ci_sessions` (
 --
 -- Dumping data untuk tabel `ci_sessions`
 --
+<<<<<<< HEAD
 
 ------------------------------------------------------
+=======
+-- --------------------------------------------------------
+>>>>>>> 90a66f66935fdf6e1cec3ad032a054c2a245bbb4
 
 --
 -- Struktur dari tabel `contacts`
@@ -349,8 +353,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `username`, `password`, `profile_picture`, `role_id`, `register_date`) VALUES
-(1, 'Mulyo Jr.', 'mulyosyahidin95@gmail.com', NULL, 'mulyojr', '$2y$10$c4YaE5KFID4t4n/f7K63fO4/hywefblr3O6s9GJl8l8Att89Hj3qy', 'agung1.png', 1, NULL),
-(7, NULL, 'agungtri@gmail.com', NULL, 'agungtria', '$2y$10$9DywISQJXSaqEuIbCUJauOq1txHJUnqJ7s/y5cBlyPn0EykMSfARS', NULL, 2, '2020-03-29 08:14:30');
+(1, 'Mulyo Jr.', 'mulyosyahidin95@gmail.com', NULL, 'mulyojr', '$2y$10$tin9aX4Uz.wlBhZYuD4Fju9q1.O07BwUKxp6yvveTeIrrsa46fqDC', 'agung1.png', 1, NULL),
+(7, NULL, 'agungtri@gmail.com', NULL, 'agungtria', '$2y$10$tin9aX4Uz.wlBhZYuD4Fju9q1.O07BwUKxp6yvveTeIrrsa46fqDC', NULL, 2, '2020-03-29 08:14:30');
 
 --
 -- Indexes for dumped tables
