@@ -44,7 +44,7 @@ class Login_model extends CI_Model {
 
     public function get_role()
     {
-        return $this->_get('role_id');
+        return $this->_get('role');
     }
 
     public function get_password()

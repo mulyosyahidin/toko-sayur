@@ -73,7 +73,7 @@ class Login extends CI_Controller {
                     {
                         $role = $this->login->get_role();
 
-                        $redir_to = ($role == 1) ? 'admin' : 'customer';
+                        $redir_to = ($role == 'admin') ? 'admin' : 'customer';
                     }
                     
                     if ($remember_me == 1)

@@ -75,7 +75,7 @@ class Order_model extends CI_Model {
     {
         $items = $this->db->query("
             SELECT oi.product_id, oi.order_qty, oi.order_price, p.name, p.picture_name
-            FROM order_item oi
+            FROM order_items oi
             JOIN products p
 	            ON p.id = oi.product_id
             WHERE order_id = '$id'");
@@ -95,8 +95,8 @@ class Order_model extends CI_Model {
 
     public function delete_order($id)
     {
-        if ( ($this->db->where('order_id', $id)->get('order_item')->num_rows() > 0))
-            $this->db->where('order_id', $id)->delete('order_item');
+        if ( ($this->db->where('order_id', $id)->get('order_items')->num_rows() > 0))
+            $this->db->where('order_id', $id)->delete('order_items');
         
         if ( ($this->db->where('order_id', $id)->get('payments')->num_rows() > 0))
             $this->db->where('order_id', $id)->delete('payments');

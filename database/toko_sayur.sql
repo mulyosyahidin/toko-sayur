@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.9.5deb2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Waktu pembuatan: 30 Mar 2020 pada 09.14
--- Versi server: 10.4.11-MariaDB
--- Versi PHP: 7.4.1
+-- Host: localhost
+-- Waktu pembuatan: 02 Bulan Mei 2021 pada 23.21
+-- Versi server: 10.3.25-MariaDB-0ubuntu0.20.04.1
+-- Versi PHP: 7.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `sayur`
+-- Database: `toko_sayur`
 --
 
 -- --------------------------------------------------------
@@ -39,6 +39,11 @@ CREATE TABLE `ci_sessions` (
 -- Dumping data untuk tabel `ci_sessions`
 --
 
+INSERT INTO `ci_sessions` (`id`, `ip_address`, `timestamp`, `data`) VALUES
+('nh2h85rl0sug37e8dtcfgqrc4d7o9c27', '::1', 1619971464, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631393937313436343b),
+('p1r5m6ad0gho44noleiu3vf40sq4qbk7', '::1', 1619971466, 0x5f5f63695f6c6173745f726567656e65726174657c693a313631393937313436343b);
+
+-- --------------------------------------------------------
 
 --
 -- Struktur dari tabel `contacts`
@@ -323,7 +328,7 @@ INSERT INTO `settings` (`id`, `key`, `content`) VALUES
 (9, 'store_address', 'Jl. Medan Baru VI, RT 12 RW 06 Kel. Kandang Limun'),
 (10, 'min_shop_to_free_shipping_cost', '20000'),
 (11, 'shipping_cost', '3000'),
-(12, 'payment_banks', '{\"bri\":{\"bank\":\"BRI\",\"name\":\"Martin Mulyo Syahidin\",\"number\":\"9999-999-99-9\"},\"btn\":{\"bank\":\"BNI\",\"name\":\"Martin Mulyo Syahidin\",\"number\":\"4444-444-44-4\"},\"bni\":{\"bank\":\"BTN\",\"name\":\"Martin Mulyo Syahidin\",\"number\":\"3333-333-333-3\"}} ');
+(12, 'payment_banks', '{\"bri\":{\"bank\":\"BRI\",\"name\":\"Martin Mulyo Syahidin\",\"number\":\"9999-999-99-9\"},\"btn\":{\"bank\":\"BNI\",\"name\":\"Martin Mulyo Syahidin\",\"number\":\"4444-444-44-4\"},\"bni\":{\"bank\":\"BTN\",\"name\":\"Martin M');
 
 -- --------------------------------------------------------
 
@@ -348,8 +353,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `username`, `password`, `profile_picture`, `role_id`, `register_date`) VALUES
-(1, 'Mulyo Jr.', 'mulyosyahidin95@gmail.com', NULL, 'mulyojr', '$2y$10$tin9aX4Uz.wlBhZYuD4Fju9q1.O07BwUKxp6yvveTeIrrsa46fqDC', 'agung1.png', 1, NULL),
-(7, NULL, 'agungtri@gmail.com', NULL, 'agungtria', '$2y$10$tin9aX4Uz.wlBhZYuD4Fju9q1.O07BwUKxp6yvveTeIrrsa46fqDC', NULL, 2, '2020-03-29 08:14:30');
+(1, 'Admin Toko Sayur', 'admin@local.test', NULL, 'admin', '$2y$10$Brm3RNWFKvZ1e0ej1vBz9.QbFMW21q0l/iDSt5aDOoGj9zlLFuxh6', 'agung1.png', 1, NULL),
+(7, 'Customer Toko Sayur', 'customer@local.test', NULL, 'customer', '$2y$10$6C/A5Yy1gt4yhStWDWN1M.isBaznzDc.MZJdIj7UddW3.qIX5vDvK', NULL, 2, '2020-03-29 08:14:30');
 
 --
 -- Indexes for dumped tables
@@ -543,38 +548,6 @@ ALTER TABLE `customers`
 ALTER TABLE `orders`
   ADD CONSTRAINT `FK_orders_coupons` FOREIGN KEY (`coupon_id`) REFERENCES `coupons` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_orders_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `order_item`
---
-ALTER TABLE `order_item`
-  ADD CONSTRAINT `FK_order_item_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_order_item_products` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `payments`
---
-ALTER TABLE `payments`
-  ADD CONSTRAINT `FK_payments_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Ketidakleluasaan untuk tabel `products`
---
-ALTER TABLE `products`
-  ADD CONSTRAINT `FK_products_product_category` FOREIGN KEY (`category_id`) REFERENCES `product_category` (`id`) ON DELETE NO ACTION ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `reviews`
---
-ALTER TABLE `reviews`
-  ADD CONSTRAINT `FK_reviews_orders` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `FK_reviews_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ketidakleluasaan untuk tabel `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `FK_users_roles` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

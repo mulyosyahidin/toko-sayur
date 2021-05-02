@@ -68,7 +68,7 @@ class Order_model extends CI_Model {
     {
         $items = $this->db->query("
             SELECT oi.product_id, oi.order_qty, oi.order_price, p.name, p.picture_name
-            FROM order_item oi
+            FROM order_items oi
             JOIN products p
 	            ON p.id = oi.product_id
             WHERE order_id = '$id'");
@@ -85,7 +85,7 @@ class Order_model extends CI_Model {
     {
         $orders = $this->db->query("
             SELECT oi.*, o.id as order_id, o.order_number, o.order_date, c.name, p.product_unit AS unit
-            FROM order_item oi
+            FROM order_items oi
             JOIN orders o
 	            ON o.id = oi.order_id
             JOIN customers c

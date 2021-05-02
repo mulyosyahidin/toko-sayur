@@ -106,17 +106,17 @@ if ( ! function_exists('verify_session'))
 if ( ! function_exists('is_admin')) {
     function is_admin() {
         $user_data = user_data();
-        $role = $user_data->role_id;
+        $role = $user_data->role;
 
-        return ($role == 1);
+        return ($role == 'admin');
     }
 }
 
 if ( ! function_exists('is_customer')) {
     function is_customer() {
         $user_data = user_data();
-        $role = $user_data->role_id;
+        $role = $user_data->role;
 
-        return ($role == 2);
+        return ($role == 'customer');
     }
 }

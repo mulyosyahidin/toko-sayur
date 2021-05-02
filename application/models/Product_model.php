@@ -55,6 +55,6 @@ class Product_model extends CI_Model {
 
     public function create_order_items($data)
     {
-        return $this->db->insert_batch('order_item', $data);
+        return $this->db->insert_batch('order_items', $data);
     }
 }
