@@ -86,6 +86,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				  <a class="dropdown-item" href="<?php echo site_url('customer/orders'); ?>">Order</a>
 				  <div class="divider"></div>
 				  <a class="dropdown-item" href="<?php echo site_url('auth/logout'); ?>">Logout</a>
+				  <?php elseif ( is_login() && is_admin()) : ?>
+					<a class="dropdown-item" href="<?php echo site_url('admin'); ?>">Dasbor</a>
+				  <div class="divider"></div>
+				  <a class="dropdown-item" href="<?php echo site_url('auth/logout'); ?>">Logout</a>
 				  <?php else : ?>
               	  <a class="dropdown-item" href="<?php echo site_url('auth/login'); ?>">Masuk Log</a>
 				  <a class="dropdown-item" href="<?php echo site_url('auth/register'); ?>">Daftar</a>
