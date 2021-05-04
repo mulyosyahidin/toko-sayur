@@ -38,6 +38,10 @@ class Settings extends CI_Controller {
             update_settings($field, $data);
         }
 
+        echo '<pre>';
+        print_r($_POST);
+        exit;
+
         $banks = $this->input->post('banks');
 
         if (is_array($banks) && count($banks) > 0 && ! empty($banks[0]['bank']))
