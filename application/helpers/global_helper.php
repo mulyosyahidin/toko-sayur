@@ -1,11 +1,10 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-if ( ! function_exists('get_settings'))
-{
+if (!function_exists('get_settings')) {
     function get_settings($key = '')
     {
-        $CI =& get_instance();
+        $CI = &get_instance();
 
         $row = $CI->db
             ->select('content')
@@ -17,8 +16,7 @@ if ( ! function_exists('get_settings'))
     }
 }
 
-if ( ! function_exists('update_settings'))
-{
+if (!function_exists('update_settings')) {
     function update_settings($key, $new_content)
     {
         $CI = init();
@@ -28,8 +26,7 @@ if ( ! function_exists('update_settings'))
     }
 }
 
-if ( ! function_exists('get_store_name'))
-{
+if (!function_exists('get_store_name')) {
     function get_store_name()
     {
         return get_settings('store_name');
@@ -37,8 +34,7 @@ if ( ! function_exists('get_store_name'))
 }
 
 
-if ( ! function_exists('get_admin_image'))
-{
+if (!function_exists('get_admin_image')) {
     function get_admin_image()
     {
         $id = get_current_user_id();
@@ -47,44 +43,51 @@ if ( ! function_exists('get_admin_image'))
         $data = $CI->db->select('profile_picture')->where('id', $id)->get('users')->row();
         $profile_picture = $data->profile_picture;
 
-        if ( file_exists('assets/uploads/users/'. $profile_picture))
+        if (file_exists('assets/uploads/users/' . $profile_picture))
             $file = $profile_picture;
         else
             $file = 'admin.png';
 
-        return base_url('assets/uploads/users/'. $file);
+        return base_url('assets/uploads/users/' . $file);
     }
 }
 
-if ( ! function_exists('get_admin_name')) {
-    function get_admin_name() {
+if (!function_exists('get_admin_name')) {
+    function get_admin_name()
+    {
         $data = user_data();
 
         return $data->name;
     }
 }
 
-if ( ! function_exists('get_user_name'))
-{
+if (!function_exists('get_user_name')) {
     function get_user_name()
     {
         $CI = init();
         $id = get_current_user_id();
 
-        $user = $CI->db->query("
+        if (is_customer()) {
+            $user = $CI->db->query("
             SELECT u.*, c.*
             FROM users u
             JOIN customers c
                 ON c.user_id = u.id
             WHERE u.id = '$id'
         ")->row();
+        } else {
+            $user = $CI->db->query("
+            SELECT u.*
+            FROM users u
+            WHERE u.id = '$id'
+        ")->row();
+        }
 
         return $user->name;
     }
 }
 
-if ( ! function_exists('get_user_image'))
-{
+if (!function_exists('get_user_image')) {
     function get_user_image()
     {
         $CI = init();
@@ -99,28 +102,26 @@ if ( ! function_exists('get_user_image'))
         ")->row();
 
         $picture = $user->profile_picture;
-        $file = './assets/uploads/users/'. $picture;
+        $file = './assets/uploads/users/' . $picture;
 
-        if ( ! file_exists($file))
+        if (!file_exists($file))
             $picture_name = $picture;
         else
             $picture_name = 'admin.png';
 
-        return base_url('assets/uploads/users/'. $picture_name);
+        return base_url('assets/uploads/users/' . $picture_name);
     }
 }
 
-if ( ! function_exists('get_store_logo'))
-{
+if (!function_exists('get_store_logo')) {
     function get_store_logo()
     {
         $file = get_settings('store_logo');
-        return base_url('assets/uploads/sites/'. $file);
+        return base_url('assets/uploads/sites/' . $file);
     }
 }
 
-if ( ! function_exists('get_formatted_date'))
-{
+if (!function_exists('get_formatted_date')) {
     function get_formatted_date($source_date)
     {
         $d = strtotime($source_date);
@@ -129,7 +130,7 @@ if ( ! function_exists('get_formatted_date'))
         $month = date('n', $d);
         $day = date('d', $d);
         $day_name = date('D', $d);
-            
+
         $day_names = array(
             'Sun' => 'Minggu',
             'Mon' => 'Senin',
@@ -162,15 +163,14 @@ if ( ! function_exists('get_formatted_date'))
     }
 }
 
-if ( ! function_exists('format_rupiah')) {
+if (!function_exists('format_rupiah')) {
     function format_rupiah($rp)
     {
-        return number_format($rp, 2 ,',', '.');
+        return number_format($rp, 2, ',', '.');
     }
 }
 
-if ( ! function_exists('create_product_sku'))
-{
+if (!function_exists('create_product_sku')) {
     function create_product_sku($name, $category, $price, $stock)
     {
         $name = create_acronym($name);
@@ -179,21 +179,19 @@ if ( ! function_exists('create_product_sku'))
         $stock = $stock;
         $key = substr(time(), -3);
 
-        $sku =  $name.$category.$price.$stock.$key;
+        $sku =  $name . $category . $price . $stock . $key;
         return $sku;
     }
 }
 
-if ( ! function_exists('create_acronym'))
-{
+if (!function_exists('create_acronym')) {
     function create_acronym($words)
     {
         $words = explode(' ', $words);
         $acronym = '';
-        
-        foreach ($words as $word)
-        {
-          $acronym .= $word[0];
+
+        foreach ($words as $word) {
+            $acronym .= $word[0];
         }
 
         $acronym = strtoupper($acronym);
@@ -202,8 +200,7 @@ if ( ! function_exists('create_acronym'))
     }
 }
 
-if ( ! function_exists('count_percent_discount'))
-{
+if (!function_exists('count_percent_discount')) {
     function count_percent_discount($discount, $from, $num = 1)
     {
         $count = ($discount / $from) * 100;
@@ -213,8 +210,7 @@ if ( ! function_exists('count_percent_discount'))
     }
 }
 
-if ( ! function_exists('get_product_image'))
-{
+if (!function_exists('get_product_image')) {
     function get_product_image($id)
     {
         $CI = init();
@@ -223,21 +219,19 @@ if ( ! function_exists('get_product_image'))
         $data = $CI->product_model->product_data($id);
         $picture_name = $data->picture_name;
 
-        if ( ! $picture_name)
+        if (!$picture_name)
             $picture_name = 'default.jpg';
 
-        $file = './assets/uploads/products/'. $picture_name;
+        $file = './assets/uploads/products/' . $picture_name;
 
-        return base_url('assets/uploads/products/'. $picture_name);
+        return base_url('assets/uploads/products/' . $picture_name);
     }
 }
 
-if ( ! function_exists('get_order_status'))
-{
+if (!function_exists('get_order_status')) {
     function get_order_status($status, $payment)
     {
-        if ($payment == 1)
-        {
+        if ($payment == 1) {
             // Bank
             if ($status == 1)
                 return 'Menunggu pembayaran';
@@ -249,9 +243,7 @@ if ( ! function_exists('get_order_status'))
                 return 'Selesai';
             else if ($status == 5)
                 return 'Dibatalkan';
-        }
-        else if ($payment == 2)
-        {
+        } else if ($payment == 2) {
             //COD
             if ($status == 1)
                 return 'Dalam proses';
@@ -265,8 +257,7 @@ if ( ! function_exists('get_order_status'))
     }
 }
 
-if ( ! function_exists('get_payment_status'))
-{
+if (!function_exists('get_payment_status')) {
     function get_payment_status($status)
     {
         if ($status == 1)
@@ -278,8 +269,7 @@ if ( ! function_exists('get_payment_status'))
     }
 }
 
-if ( ! function_exists('get_contact_status'))
-{
+if (!function_exists('get_contact_status')) {
     function get_contact_status($status)
     {
         if ($status == 1)
@@ -291,8 +281,7 @@ if ( ! function_exists('get_contact_status'))
     }
 }
 
-if ( ! function_exists('get_month'))
-{
+if (!function_exists('get_month')) {
     function get_month($mo)
     {
         $months = array(
