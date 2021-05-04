@@ -112,7 +112,7 @@ class Payments extends CI_Controller {
             }
             else
             {
-                show_error($This->upload->display_errors());
+                show_error($this->upload->display_errors());
             }
 
             $data = array(

@@ -39,6 +39,7 @@ class Settings extends CI_Controller {
         }
 
         $banks = $this->input->post('banks');
+        update_settings('payment_banks', '{}');
 
         if (is_array($banks) && count($banks) > 0 && ! empty($banks[0]['bank']))
         {
@@ -57,6 +58,29 @@ class Settings extends CI_Controller {
         }
 
         $this->session->set_flashdata('settings_flash', 'Pengaturan berhasil diperbarui');
+        redirect('admin/settings');
+    }
+
+    public function add_bank()
+    {
+        $bank_name = $this->input->post('bank');
+        $bank_number = $this->input->post('number');
+        $owner = $this->input->post('name');
+
+        $bank_slug = $this->_bank_slug($bank_name);
+        $data[$bank_slug] = [
+            'bank' => $bank_name,
+            'number' => $bank_number,
+            'name' => $owner
+        ];
+
+        $old_data = (array) json_decode(get_settings('payment_banks'));
+        $new_data = array_merge($old_data, $data);
+        $new_data = json_encode($new_data);
+
+        update_settings('payment_banks', $new_data);
+
+        $this->session->set_flashdata('settings_flash', 'Berhasil menambah data bank');
         redirect('admin/settings');
     }
 

@@ -89,13 +89,13 @@ defined('BASEPATH') or exit('No direct script access allowed');
         <div class="card">
           <div class="card-header">
             <h3 class="mb-0">Pengaturan Pembayaran</h3>
-            <button type="button" class="btn btn-outline-primary btn-add float-right btn-sm" style="margin-top: -30px;"><i class="fas fa-plus-square"></i></button>
+            <button type="button" data-toggle="modal" data-target="#addBankModal" class="btn btn-outline-primary btn-add float-right btn-sm" style="margin-top: -30px;"><i class="fas fa-plus-square"></i></button>
           </div>
           <div class="card-body">
             <?php if (is_array($banks) && count($banks) > 0) : ?>
               <?php $n = 0; ?>
               <div class="increment">
-                <?php foreach ($banks as $bank) : ?>
+                <?php foreach ($banks as $slug => $bank) : ?>
 
                   <div class="row alert alert-info bank-data">
                     <div class="col-12">
@@ -118,26 +118,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
                 <?php endforeach; ?>
               </div>
             <?php else : ?>
-              <div class="alert alert-info alert-zero">Belum ada data bank yang ditambahkan. Tambahkan yang pertama!</div>
-              <div class="increment">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="form-group">
-                      <label for="">Nama bank:</label>
-                      <input type="text" class="form-control" name="banks[0][bank]">
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <label for="">No. Rekening:</label>
-                    <input type="text" class="form-control" name="banks[0][number]">
-                  </div>
-                  <div class="col-6">
-                    <label for="">Nama pemilik:</label>
-                    <input type="text" class="form-control" name="banks[0][name]">
-                  </div>
-                </div>
+              <div class="alert alert-info alert-zero">
+              Belum ada data bank yang ditambahkan. Tambahkan yang pertama!
+              <br>
+              (Tekan tombol + dikanan untuk menambah)
               </div>
-
             <?php endif; ?>
           </div>
           <div class="card-footer">
@@ -202,33 +187,53 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
   </form>
 
-  <script>
-    jQuery(document).ready(function() {
-      let no = $('.bank-data').length;
-      jQuery(".btn-add").click(function() {
-        no = no + 1;
-        let markup = `<div class="row alert alert-success m-1">
+  <div class="modal fade" id="addBankModal" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true">
+    <div class="modal-dialog modal- modal-dialog modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-body p-0">
+          <div class="card bg-secondary border-0 mb-0">
+            <div class="card-header bg-transparent">
+              <h3 class="card-heading text-center mt-2">Tambah Rekening Bank</h3>
+            </div>
+            <div class="card-body px-lg-5 py-lg-5">
+              <form role="form" action="<?php echo site_url('admin/settings/add_bank'); ?>" method="POST" id="addCouponForm">
+
+                <div class="row">
                   <div class="col-12">
                     <div class="form-group">
                       <label for="">Nama bank:</label>
-                      <input type="text" class="form-control" name="banks[${no}][bank]">
+                      <input type="text" class="form-control" name="bank">
                     </div>
                   </div>
                   <div class="col-6">
                     <label for="">No. Rekening:</label>
-                    <input type="text" class="form-control" name="banks[${no}][number]">
+                    <input type="text" class="form-control" name="number">
                   </div>
                   <div class="col-6">
                     <label for="">Nama pemilik:</label>
-                    <input type="text" class="form-control" name="banks[${no}][name]">
+                    <input type="text" class="form-control" name="name">
                   </div>
-                </div>`
-        jQuery(".increment").append(markup);
+                </div>
 
-        let zero = $('.alert-zero');
-        if (zero.length > 0) {
-          zero.hide('fade');
-        }
+                <div class="text-left">
+                  <button type="button" class="btn btn-secondary my-4" data-dismiss="modal">Batal</button>
+                </div>
+                <div class="float-right" style="margin-top: -90px">
+                  <button type="submit" class="btn btn-primary my-4 addPackageBtn">Tambah</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    jQuery(document).ready(function() {
+      let no = $('.bank-data').length;
+      jQuery(".btn-add").click(function() {
+
       });
       jQuery("body").on("click", ".btn-remove", function() {
         jQuery(this).parents(".input-group").remove();
