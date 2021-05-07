@@ -47,7 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <?php echo form_error('password'); ?>
             </div>
             <div class="forgot">
-                <?php echo anchor('auth/forget-password', 'Lupa password?'); ?>
+                <!-- <?php echo anchor('auth/forget-password', 'Lupa password?'); ?> -->
                 <p><input type="checkbox" name="remember_me" value="1">Ingat saya</p>
             </div>
             <button type="submit">Login</button>

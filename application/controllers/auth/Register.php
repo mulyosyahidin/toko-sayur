@@ -45,7 +45,7 @@ class Register extends CI_Controller {
                 'email' => $email,
                 'username' => $username,
                 'password' => $password,
-                'role_id' => 2,
+                'role' => 'customer',
                 'register_date' => date('Y-m-d H:i:s')
             );
             
