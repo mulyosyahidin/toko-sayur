@@ -302,3 +302,13 @@ if (!function_exists('get_month')) {
         return $months[$mo];
     }
 }
+
+if (!function_exists('get_controller')) {
+    function get_controller()
+    {
+        $CI = init();
+        $controller = $CI->router->fetch_class();
+
+        return $controller;
+    }
+}
