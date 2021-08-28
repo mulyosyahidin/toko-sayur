@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Orders extends CI_Controller {
+class Orders extends CI_Controller
+{
     public function __construct()
     {
         parent::__construct();
@@ -15,7 +16,13 @@ class Orders extends CI_Controller {
 
     public function index()
     {
-        $params['title'] = 'Kelola Order';
+        $search = $this->input->get('search_query');
+
+        if ($search) {
+            $params['title'] = 'Cari "' . $search . '"';
+        } else {
+            $params['title'] = 'Kelola Order';
+        }
 
         $config['base_url'] = site_url('admin/orders/index');
         $config['total_rows'] = $this->order->count_all_orders();
@@ -23,7 +30,7 @@ class Orders extends CI_Controller {
         $config['uri_segment'] = 4;
         $choice = $config['total_rows'] / $config['per_page'];
         $config['num_links'] = floor($choice);
- 
+
         $config['first_link']       = '«';
         $config['last_link']        = '»';
         $config['next_link']        = '›';
@@ -45,8 +52,8 @@ class Orders extends CI_Controller {
 
         $this->load->library('pagination', $config);
         $page = ($this->uri->segment(4)) ? $this->uri->segment(4) : 0;
- 
-        $orders['orders'] = $this->order->get_all_orders($config['per_page'], $page);
+
+        $orders['orders'] = $this->order->get_all_orders($config['per_page'], $page, $search);
         $orders['pagination'] = $this->pagination->create_links();
 
         $this->load->view('header', $params);
@@ -56,14 +63,13 @@ class Orders extends CI_Controller {
 
     public function view($id = 0)
     {
-        if ( $this->order->is_order_exist($id))
-        {
+        if ($this->order->is_order_exist($id)) {
             $data = $this->order->order_data($id);
             $items = $this->order->order_items($id);
             $banks = json_decode(get_settings('payment_banks'));
-            $banks = (Array) $banks;
- 
-            $params['title'] = 'Order #'. $data->order_number;
+            $banks = (array) $banks;
+
+            $params['title'] = 'Order #' . $data->order_number;
 
             $order['data'] = $data;
             $order['items'] = $items;
@@ -75,9 +81,7 @@ class Orders extends CI_Controller {
             $this->load->view('header', $params);
             $this->load->view('orders/view', $order);
             $this->load->view('footer');
-        }
-        else
-        {
+        } else {
             show_404();
         }
     }
@@ -90,6 +94,28 @@ class Orders extends CI_Controller {
         $this->order->set_status($status, $order);
         $this->session->set_flashdata('order_flash', 'Status berhasil diperbarui');
 
-        redirect('admin/orders/view/'. $order);
+        redirect('admin/orders/view/' . $order);
+    }
+
+    public function pdf($id)
+    {
+        if ($this->order->is_order_exist($id)) {
+            $this->load->library('pdf');
+            $data = $this->order->order_data($id);
+
+            $items = $this->order->order_items($id);
+            $banks = json_decode(get_settings('payment_banks'));
+            $banks = (array) $banks;
+
+            $params['data'] = $data;
+            $params['items'] = $items;
+            $params['delivery_data'] = json_decode($data->delivery_data);
+            $params['banks'] = $banks;
+
+            $html = $this->load->view('orders/pdf', $params, true);
+            $this->pdf->createPDF($html, 'order_' . $data->order_number, false, 'A3');
+        } else {
+            show_404();
+        }
     }
 }

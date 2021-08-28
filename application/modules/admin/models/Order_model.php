@@ -1,29 +1,53 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Order_model extends CI_Model {
+class Order_model extends CI_Model
+{
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function count_all_orders()
+    public function count_all_orders($search = null)
     {
-        return $this->db->get('orders')->num_rows();
+        if (empty($search)) {
+            return $this->db->count_all('orders');
+        } else {
+            $count = $this->db->from('orders o')
+                ->join('customers c', 'c.id = o.user_id')
+                ->like('u.name', $search)
+                ->or_like('o.order_number', $search)
+                ->get()
+                ->num_rows();
+        }
     }
 
-    public function get_all_orders($limit, $start)
+    public function get_all_orders($limit, $start, $search = null)
     {
-        $orders = $this->db->query("
-            SELECT o.id, o.order_number, o.order_date, o.order_status, o.payment_method, o.total_price, o.total_items, c.name AS coupon, cu.name AS customer
-            FROM orders o
-            LEFT JOIN coupons c
-                ON c.id = o.coupon_id
-            JOIN customers cu
-                ON cu.user_id = o.user_id
-            ORDER BY o.order_date DESC
-            LIMIT $start, $limit
-        ");
+        // $orders = $this->db->query("
+        //     SELECT o.id, o.order_number, o.order_date, o.order_status, o.payment_method, o.total_price, o.total_items, c.name AS coupon, cu.name AS customer
+        //     FROM orders o
+        //     LEFT JOIN coupons c
+        //         ON c.id = o.coupon_id
+        //     JOIN customers cu
+        //         ON cu.user_id = o.user_id
+        //     ORDER BY o.order_date DESC
+        //     LIMIT $start, $limit
+        // ");
+
+        $this->db->select('o.id, o.order_number, o.order_date, o.order_status, o.payment_method, o.total_price, o.total_items, c.name AS coupon, cu.name AS customer')
+            ->join('coupons c', 'c.id = o.coupon_id', 'left')
+            ->join('customers cu', 'cu.user_id = o.user_id', 'left')
+            ->order_by('o.order_date', 'DESC')
+            ->limit($limit, $start);
+
+        if ( ! is_null($search)) {
+            $this->db->like('o.order_number', $search)
+                ->or_like('o.total_price', $search)
+                ->or_like('cu.name', $search);
+        }
+
+        $orders = $this->db->get('orders o');
 
         return $orders->result();
     }
@@ -41,7 +65,7 @@ class Order_model extends CI_Model {
             LIMIT 5
         ");
 
-    return $orders->result();
+        return $orders->result();
     }
 
     public function is_order_exist($id)
@@ -60,7 +84,7 @@ class Order_model extends CI_Model {
                 ON p.order_id = o.id
             WHERE o.id = '$id'
         ");
-        
+
         return $data->row();
     }
 
